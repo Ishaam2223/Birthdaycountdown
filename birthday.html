@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Happy Birthday!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffebcd;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            font-size: 2em;
+            position: relative;
+            z-index: 2;
+            padding: 10px;
+        }
+        #countdown {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 10px;
+        }
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 15px;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+        .balloons {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://media.giphy.com/media/l0HU7jj0iv8l1NdI4/giphy.gif') center/cover no-repeat;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Advance Happy Birthday, Thangam ! 🎉</h1>
+    <img src="nat.jpg" alt="Mr. N's Picture" class="profile-pic">
+    <p id="countdown"></p>
+    <div class="hearts"></div>
+    <div class="balloons" id="balloons"></div>
+
+    <script>
+        function createHearts() {
+            const heartContainer = document.querySelector('.hearts');
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heartContainer.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }
+        }
+        setInterval(createHearts, 1000);
+
+        function updateCountdown() {
+            const birthday = new Date('2025-03-22 00:00:00');
+            const now = new Date();
+            const diff = birthday - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "🎂 It's Birthday Time! 🎂";
+                document.getElementById('balloons').style.display = 'block';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML =
+                `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
